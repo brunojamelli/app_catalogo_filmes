@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 import 'database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Garante que o Flutter está inicializado
   final dbHelper = DatabaseHelper();
 
-  // Recuperar e exibir os filmes no console
+  // Recuperar e exibir os filmes no console (opcional)
   final filmes = await dbHelper.getFilmes();
   print('Filmes pré-inseridos:');
   filmes.forEach((filme) {
@@ -27,16 +28,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Meus Filmes',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Meus Filmes'),
-        ),
-        body: Center(
-          child: Text('Banco de dados configurado com sucesso!'),
-        ),
-      ),
+      home: HomeScreen(),
     );
   }
 }
