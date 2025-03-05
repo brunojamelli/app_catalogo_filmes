@@ -57,7 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Meus Filmes'),
+        title: Text(
+          'Meus Filmes',
+          style: TextStyle(color: Colors.white), // Texto branco
+        ),
+        centerTitle: true, // Centraliza o título
+        backgroundColor: Colors.black, // Fundo preto
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
