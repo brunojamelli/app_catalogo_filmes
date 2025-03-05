@@ -53,16 +53,49 @@ class _HomeScreenState extends State<HomeScreen> {
     _carregarFilmes();
   }
 
+  void _ordenarFilmes(String criterio) {
+    setState(() {
+        if (criterio == 'titulo') {
+          _filmes.sort((a, b) => a.titulo.compareTo(b.titulo));
+        } else if (criterio == 'ano') {
+          _filmes.sort((a, b) => a.ano.compareTo(b.ano));
+        } else if (criterio == 'nota') {
+          _filmes.sort((a, b) => b.nota.compareTo(a.nota)); // Decrescente
+        }
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Meus Filmes',
-          style: TextStyle(color: Colors.white), // Texto branco
+          style: TextStyle(color: Colors.white), 
         ),
-        centerTitle: true, // Centraliza o título
-        backgroundColor: Colors.black, // Fundo preto
+        centerTitle: true, 
+        backgroundColor: Colors.black,
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.sort, color: Colors.white),
+            onSelected: _ordenarFilmes,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'titulo',
+                child: Text('Ordenar por Título'),
+              ),
+              PopupMenuItem(
+                value: 'ano',
+                child: Text('Ordenar por Ano'),
+              ),
+              PopupMenuItem(
+                value: 'nota',
+                child: Text('Ordenar por Nota'),
+              ),
+            ],
+          ),
+        ], 
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
