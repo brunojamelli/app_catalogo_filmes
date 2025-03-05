@@ -1,3 +1,4 @@
+import 'package:app_catalogo_filmes/widgets/animated_filme_card.dart';
 import 'package:flutter/material.dart';
 import '../services/database.dart';
 import '../models/filme.dart';
@@ -107,16 +108,23 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: _filmes.length,
         itemBuilder: (context, index) {
           final filme = _filmes[index];
-          return FilmeCard(
+          return AnimatedFilmeCard(
             filme: filme,
             onTap: () => _editarFilme(filme.id),
             onLongPress: () => _removerFilme(filme.id),
+            index: index,
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _navegarParaCadastro,
-        child: Icon(Icons.add),
+      onPressed: _navegarParaCadastro,
+        backgroundColor: Colors.black, 
+        foregroundColor: Colors.white, 
+        elevation: 5, 
+        shape: RoundedRectangleBorder( 
+          borderRadius: BorderRadius.circular(16), 
+        ),
+        child: Icon(Icons.add), 
       ),
     );
   }
