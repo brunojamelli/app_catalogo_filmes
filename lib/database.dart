@@ -73,4 +73,19 @@ class DatabaseHelper {
     Database db = await database;
     return await db.query('filmes');
   }
+
+  Future<int> insertFilme(Map<String, dynamic> filme) async {
+    Database db = await database;
+    return await db.insert('filmes', filme);
+  }
+
+  Future<int> updateFilme(Map<String, dynamic> filme) async {
+    Database db = await database;
+    return await db.update('filmes', filme, where: 'id = ?', whereArgs: [filme['id']]);
+  }
+  
+   Future<int> deleteFilme(int id) async {
+    Database db = await database;
+    return await db.delete('filmes', where: 'id = ?', whereArgs: [id]);
+  }
 }
