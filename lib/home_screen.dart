@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'database.dart';
 import 'cadastro_screen.dart';
 
@@ -107,7 +108,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 5),
-                    Text('Nota: ${filme['nota']}'),
+                    // Text('Nota: ${filme['nota']}'),
+                    SizedBox(height: 5),
+                    RatingBar.builder(
+                      initialRating: filme['nota'] ?? 0.0,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 20,
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print("Nova avaliação: $rating");
+                      },
+                      ignoreGestures: true,
+            ),
                   ],
                 ),
               ),
