@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../models/filme.dart';
 import '../services/database.dart';
 
@@ -17,8 +18,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   final _anoController = TextEditingController();
   final _direcaoController = TextEditingController();
   final _resumoController = TextEditingController();
-  final _urlCartazController = TextEditingController();
-  final _notaController = TextEditingController();
+  double _nota = 0.0;
 
   @override
   void initState() {
@@ -28,8 +28,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
       _anoController.text = widget.filme!.ano.toString();
       _direcaoController.text = widget.filme!.direcao;
       _resumoController.text = widget.filme!.resumo;
-      _urlCartazController.text = widget.filme!.urlCartaz;
-      _notaController.text = widget.filme!.nota.toString();
+      _nota = widget.filme!.nota;
     }
   }
 
@@ -87,25 +86,23 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   return null;
                 },
               ),
-              TextFormField(
-                controller: _urlCartazController,
-                decoration: InputDecoration(labelText: 'URL do Cartaz'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira a URL do cartaz';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _notaController,
-                decoration: InputDecoration(labelText: 'Nota'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira a nota';
-                  }
-                  return null;
+              SizedBox(height: 20),
+              Text('Nota:'),
+              RatingBar.builder(
+                initialRating: _nota,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 30,
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _nota = rating;
+                  });
                 },
               ),
               SizedBox(height: 20),
@@ -128,8 +125,8 @@ class _CadastroScreenState extends State<CadastroScreen> {
         ano: int.parse(_anoController.text),
         direcao: _direcaoController.text,
         resumo: _resumoController.text,
-        urlCartaz: _urlCartazController.text,
-        nota: double.parse(_notaController.text),
+        urlCartaz: widget.filme?.urlCartaz ?? '', // Mantém a URL existente ou gera uma nova
+        nota: _nota,
       );
 
       final databaseService = DatabaseService();
